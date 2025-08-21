@@ -21,16 +21,15 @@ export async function DELETE(request, { params }) {
 
 
 export async function GET(request,{params}){
-   try{
-    const {name} = await request.json();
-    console.log('====================================');
-    console.log(name);
-    console.log('====================================');
-   }catch(err){
-    return new Response(
-      JSON.stringify({
-        error:"something wents wrong"
-      })
-    )
-   }
+    
+const capFirst = params.id.charAt(0).toUpperCase() + params.id.slice(1);
+   
+   const data = await prisma.product.findFirst({
+    where: {
+      event: capFirst,
+    },
+  });
+
+    return new Response(JSON.stringify(data))
+
 }
